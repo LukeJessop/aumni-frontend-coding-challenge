@@ -1,0 +1,28 @@
+.companyContainer{
+    background-color: antiquewhite;
+    margin-bottom: 5px;
+}
+.companyContainer:hover{
+    background-color: rgb(168, 158, 144);
+}
+
+.companyName{
+
+}
+.companyImg{
+    background-color: white;
+    height: 50px;
+    width: 200px;
+}
+.companyCost{
+
+}
+.companyOwnershipPercent{
+
+}
+.companyValue{
+
+}
+.companyFounded{
+
+}

@@ -1,14 +1,22 @@
-import React from "react";
-import logo from "./images/logo.png";
+import React, {Component} from "react";
+import Funds from './components/Funds'
 import "./App.css";
+class App extends Component {
+  constructor(){
+    super()
+    this.state={
+    }
+  }
 
-function App() {
-  return (
-    <div style={{ textAlign: "center" }}>
-      <img src={logo} alt="Aumni Logo" />
-      <h1>Aumni Frontend Coding Challenge</h1>
-    </div>
-  );
+
+
+  render(){
+    return (
+      <div className='masterContainer'>
+        <Funds/>
+      </div>
+    )
+  }
 }
 
 export default App;

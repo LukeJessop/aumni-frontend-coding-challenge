@@ -1,60 +1,58 @@
 import React, {Component} from 'react'
 import './CSS/companies.css'
+import { Bar, Line, Pie } from 'react-chartjs-2';
+const moneyFormat = (price) => {
+    let numArray = Array.from(`${price}`)
+    numArray.reverse()
+    for(let i = 0; i < numArray.length; i++){
+        let x = i % 4
+        if(x === 0){
+            numArray.splice(i, 0, ',')
+        }
+    }
+    numArray.shift()
+    numArray.reverse()
+    let newPrice = numArray.join('')
+    return newPrice
+}
+const percentageFormat = (percent) => {
+    
+    percent = percent * 100
+    
+    let finalPercent = Math.round(percent)
+
+
+    return finalPercent
+}
 
 const Companies = (props) => {
+    console.log(props)
     const {name, logo, cost, ownershipPercentage, impliedValue, founded} = props.companies
-    
-    let cost2 = ''
-    let impliedVal2 = ''
-    let ownershipPercentage2 = ''
-
-    const moneyFormat = (price) => {
-        let numArray = Array.from(`${price}`)
-        numArray.reverse()
-        for(let i = 0; i < numArray.length; i++){
-            let x = i % 4
-            if(x === 0){
-                console.log(i)
-                numArray.splice(i, 0, ',')
-            }
-        }
-        numArray.shift()
-        numArray.reverse()
-        cost2 = numArray.join("")
+    let chartData = {
+        labels: [`cost $${moneyFormat(cost)}`, `value $${moneyFormat(impliedValue)}`],
+        datasets: 
+        [{
+            label: 'Cost vs Value',
+            data: [cost, impliedValue],
+            backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(255, 132, 132, 0.6)'],
+            
+        }]
     }
-
-    const moneyFormat2 = (price) => {
-        let numArray = Array.from(`${price}`)
-        numArray.reverse()
-        for(let i = 0; i < numArray.length; i++){
-            let x = i % 4
-            if(x === 0){
-                console.log(i)
-                numArray.splice(i, 0, ',')
-            }
-        }
-        numArray.shift()
-        numArray.reverse()
-        impliedVal2 = numArray.join("")
-    }
-
-    const percentageFormat = (percent) => {
-        percent = percent * 100
-        ownershipPercentage2 = percent
-    }
-
-
     return(
         <div className="companyContainer">
-            <div className="companyName">Company: {name}</div>
-            <img className='companyImg' src={logo}/>
-            {moneyFormat(cost)}
-            <div className="companyCost">Cost: ${cost2}</div>
-            {percentageFormat(ownershipPercentage)}
-            <div className="companyOwnershipPercent">Ownership Percentage: {ownershipPercentage2}%</div>
-            {moneyFormat2(impliedValue)}
-            <div className="companyValue">Implied Value: ${impliedVal2}</div>
-            <div className="companyFounded">Founded: {founded}</div>
+            <div className="companyBrand">
+                <img className='companyImg' src={logo}/>
+                <div className="companyFounded">Established {founded}</div>
+            </div>
+                <hr/>
+            <div className="companyOwnershipPercent">{props.fundName} owns {percentageFormat(ownershipPercentage)}% of this company</div>
+            <div className="companyInformation">
+                <Bar
+                    height={100}
+	                data={chartData}
+	                options={{}}
+                />
+            </div>
         </div>
     )
 

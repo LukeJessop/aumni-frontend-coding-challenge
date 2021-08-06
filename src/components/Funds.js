@@ -1,82 +1,74 @@
-import React, {Component} from 'react'
-import funds from '../mocks/funds.json'
+import React, {useState} from 'react'
+import fundList from '../mocks/funds.json'
 import Companies from './Companies'
 import './CSS/funds.css'
-import {Pie, Doughnut, Bar} from 'react-chartjs-2'
 
-class Funds extends Component {
-    constructor(){
-        super()
-        this.state={
-            funds: funds,
-            clickedFundId: '',
-            clickedCompanyId: ''
-        }
-    }
+const Funds = () => {
+    const [funds, updateFunds] = useState(fundList)
+    const [clickedFundId, updateClickedFund] = useState('')
+    const [clickedCompanyId, updateClickedCompany] = useState('')
 
-    render(){
-        const fundsArray = this.state.funds.map((fund) => 
-        <div className="fundContainer">
+    
+    const fundsArray = funds.map((fund) => 
+        <div className="fund-container">
             <div className='fund' onClick={() => {
-                if(this.state.clickedFundId !== fund.id){
-                    this.setState({
-                        clickedFundId: fund.id
-                    })
-                }else if(this.state.clickedFundId === fund.id){
-                    this.setState({
-                        clickedFundId: ''
-                    })
+                if(clickedFundId !== fund.id){
+                    updateClickedFund(fund.id)
+
+                }else if(clickedFundId === fund.id){
+                    updateClickedFund('')
                 }
             }}>
-                <div className='fundName'>{fund.name}</div>
+                <div className='fund-name'>{fund.name}</div>
             </div>
 
                 {fund.companies.map((company) => 
-                    {if(fund.id === this.state.clickedFundId){
+                    {if(fund.id === clickedFundId){
                         return(
-                            <div className="companyList" onClick={() =>
+                            <div className="company-list" onClick={() =>
                                 {
-                                    if(this.state.clickedCompanyId !== company.id){
-                                        this.setState({
-                                            clickedCompanyId: company.id
-                                        })
+                                    if(clickedCompanyId !== company.id){
+                                        updateClickedCompany(company.id)
                                     }
                                 }
                             }>
                                 <h3>{company.name}</h3>
                             </div>
-                            )
-                    }})}
-
-        </div>
-        )
-
-        const companyArray = this.state.funds.map((fund) =>
-            <div>
-                {fund.companies.map((company) => 
-                        {if(company.id === this.state.clickedCompanyId){
-                            return(
-                                <Companies key={company.id} companies={company} fundName={fund.name}/>
-                            )
-                        }}
+                        )
+                    }}
                 )}
 
-            </div>
-            
-        )
+        </div>
+    )
+        
+    const companyArray = funds.map((fund) =>
+    <div>
+            {fund.companies.map((company) => 
+                {if(company.id === clickedCompanyId){
+                    return(
+                        <Companies key={company.id} companies={company} fundName={fund.name}/>
+                    )
+                }}
+            )}
+
+    </div>
+    )
+
+        
         return(
-            <div className='soleContainer'>
-                <div className='fundsContainer'>
+            <div className='sole-container'>
+                <div className='funds-container'>
                     {fundsArray}
                 </div>
-                <div className='dataContainer'>
+                <div className='data-container'>
                     {companyArray}
                 </div>
             </div>
         )
-    }
-
 
 }
+
+
+
 
 export default Funds

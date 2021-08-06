@@ -1,36 +1,15 @@
-.companyContainer{
+.company-container{
     background-color: rgb(255, 255, 255);
     width: 78vw;
     height: 88vh;
     padding: 10px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-.companyBrand{
+.company-brand{
     display: flex;
     align-items:flex-end;
     justify-content: space-between;
 }
-.companyInformation{
-}
-
-.companyName{
-}
-.companyImg{
+.company-img{
     height: 100px;
-}
-
-.companyFounded{
-}
-.companyCost{
-
-}
-
-.companyCost{
-}
-.companyOwnershipPercent{
-
-}
-.companyValue{
-
 }

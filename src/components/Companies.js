@@ -1,35 +1,19 @@
-import React, {Component} from 'react'
+import React from 'react'
 import './CSS/companies.css'
-import { Bar, Line, Pie } from 'react-chartjs-2';
-const moneyFormat = (price) => {
-    let numArray = Array.from(`${price}`)
-    numArray.reverse()
-    for(let i = 0; i < numArray.length; i++){
-        let x = i % 4
-        if(x === 0){
-            numArray.splice(i, 0, ',')
-        }
-    }
-    numArray.shift()
-    numArray.reverse()
-    let newPrice = numArray.join('')
-    return newPrice
+import {Bar} from 'react-chartjs-2';
+
+const formatMoney = (price) => {
+    return price.toLocaleString()
 }
-const percentageFormat = (percent) => {
-    
-    percent = percent * 100
-    
-    let finalPercent = Math.round(percent)
 
-
-    return finalPercent
+const toPercent = (percent) => {
+    return Math.round(percent * 100)
 }
 
 const Companies = (props) => {
-    console.log(props)
-    const {name, logo, cost, ownershipPercentage, impliedValue, founded} = props.companies
+    const {logo, cost, ownershipPercentage, impliedValue, founded} = props.companies
     let chartData = {
-        labels: [`cost $${moneyFormat(cost)}`, `value $${moneyFormat(impliedValue)}`],
+        labels: [`cost $${formatMoney(cost)}`, `value $${formatMoney(impliedValue)}`],
         datasets: 
         [{
             label: 'Cost vs Value',
@@ -39,18 +23,17 @@ const Companies = (props) => {
         }]
     }
     return(
-        <div className="companyContainer">
-            <div className="companyBrand">
-                <img className='companyImg' src={logo}/>
-                <div className="companyFounded">Established {founded}</div>
+        <div className="company-container">
+            <div className="company-brand">
+                <img className='company-img' src={logo}/>
+                <div className="company-founded">Established {founded}</div>
             </div>
                 <hr/>
-            <div className="companyOwnershipPercent">{props.fundName} owns {percentageFormat(ownershipPercentage)}% of this company</div>
-            <div className="companyInformation">
+            <div className="company-ownership-percent">{props.fundName} owns {toPercent(ownershipPercentage)}% of this company</div>
+            <div className="company-information">
                 <Bar
                     height={100}
 	                data={chartData}
-	                options={{}}
                 />
             </div>
         </div>
